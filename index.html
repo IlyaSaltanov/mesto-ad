@@ -52,6 +52,9 @@
                 id="user-name"
                 class="popup__input popup__input_type_name"
                 placeholder="Имя"
+                required
+                minlength="2"
+                maxlength="40"
               />
             </label>
             <label class="popup__label">
@@ -61,6 +64,9 @@
                 id="user-description"
                 class="popup__input popup__input_type_description"
                 placeholder="Занятие"
+                required
+                minlength="2"
+                maxlength="100"
               />
             </label>
             <button
@@ -86,6 +92,9 @@
                 id="place-name"
                 class="popup__input popup__input_type_card-name"
                 placeholder="Название"
+                required
+                minlength="2"
+                maxlength="30"
               />
             </label>
             <label class="popup__label">
@@ -95,6 +104,8 @@
                 id="place-link"
                 class="popup__input popup__input_type_url"
                 placeholder="Ссылка на картинку"
+                required
+                pattern="https?://.+"
               />
             </label>
             <button
@@ -143,6 +154,8 @@
                 id="user-avatar"
                 class="popup__input popup__input_type_avatar"
                 placeholder="Ссылка на изображение"
+                required
+                pattern="https?://.+"
               />
             </label>
             <button
