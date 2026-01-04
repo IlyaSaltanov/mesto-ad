@@ -55,7 +55,10 @@
                 required
                 minlength="2"
                 maxlength="40"
+                data-error-message="Разрешены только латинские, кириллические буквы, знаки дефиса и пробелы"
+                pattern="^[A-Za-zА-Яа-яЁё\s\-]+$"
               />
+              <span class="popup__error" id="user-name-error"></span>
             </label>
             <label class="popup__label">
               <input
@@ -66,8 +69,9 @@
                 placeholder="Занятие"
                 required
                 minlength="2"
-                maxlength="100"
+                maxlength="200"
               />
+              <span class="popup__error" id="user-description-error"></span>
             </label>
             <button
               type="submit"
