@@ -24,3 +24,28 @@ const hideInputError = (formElement, inputElement, settings) => {
   errorElement.textContent = '';
   errorElement.classList.remove(settings.errorClass);
 };
+
+// 3. checkInputValidity — проверяет валидность конкретного поля
+const checkInputValidity = (formElement, inputElement, settings) => {
+  if (!inputElement.validity.valid) {
+    if (inputElement.validity.patternMismatch && inputElement.dataset.errorMessage) {
+      showInputError(formElement, inputElement, inputElement.dataset.errorMessage, settings);
+    } else {
+      showInputError(formElement, inputElement, inputElement.validationMessage, settings);
+    }
+  } else {
+    hideInputError(formElement, inputElement, settings);
+  }
+};
+
+// 4. hasInvalidInput — возвращает true, если хотя бы одно поле невалидно
+const hasInvalidInput = (inputList) => {
+  // Проходим по каждому элементу массива
+  for (let i = 0; i < inputList.length; i++) {
+    // Если текущее поле невалидно
+    if (inputList[i].validity.valid === false) {
+      return true; // Нашли невалидное поле - сразу возвращаем true
+    }
+  }
+  return false; // Если дошли до конца - все поля валидны
+};
