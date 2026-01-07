@@ -49,3 +49,9 @@ const hasInvalidInput = (inputList) => {
   }
   return false; // Если дошли до конца - все поля валидны
 };
+
+// 5. disableSubmitButton — делает кнопку неактивной
+const disableSubmitButton = (buttonElement, settings) => {
+  buttonElement.disabled = true;
+  buttonElement.classList.add(settings.inactiveButtonClass);
+};
