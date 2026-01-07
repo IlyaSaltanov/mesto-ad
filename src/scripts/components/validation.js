@@ -55,3 +55,18 @@ const disableSubmitButton = (buttonElement, settings) => {
   buttonElement.disabled = true;
   buttonElement.classList.add(settings.inactiveButtonClass);
 };
+
+// 6. enableSubmitButton — включает кнопку
+const enableSubmitButton = (buttonElement, settings) => {
+  buttonElement.disabled = false;
+  buttonElement.classList.remove(settings.inactiveButtonClass);
+};
+
+// 7. toggleButtonState — включает или отключает кнопку
+const toggleButtonState = (inputList, buttonElement, settings) => {
+  if (hasInvalidInput(inputList)) {
+    disableSubmitButton(buttonElement, settings);
+  } else {
+    enableSubmitButton(buttonElement, settings);
+  }
+};
