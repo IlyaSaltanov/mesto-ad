@@ -115,3 +115,5 @@ allPopups.forEach((popup) => {
   setCloseModalWindowEventListeners(popup);
 });
 
+// Включение валидации всех форм
+enableValidation(validationSettings);
