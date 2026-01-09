@@ -98,3 +98,15 @@ const clearValidation = (formElement, settings) => {
   disableSubmitButton(buttonElement, settings);
 };
 
+// 10. enableValidation — отвечает за включение валидации всех форм
+const enableValidation = (settings) => {
+  const formList = Array.from(document.querySelectorAll(settings.formSelector));
+  
+  formList.forEach((formElement) => {
+    formElement.addEventListener('submit', (evt) => {
+      evt.preventDefault();
+    });
+    
+    setEventListeners(formElement, settings);
+  });
+};
