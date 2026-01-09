@@ -85,3 +85,16 @@ const setEventListeners = (formElement, settings) => {
     });
   });
 };
+
+// 9. clearValidation — очищает ошибки валидации и делает кнопку неактивной
+const clearValidation = (formElement, settings) => {
+  const inputList = Array.from(formElement.querySelectorAll(settings.inputSelector));
+  const buttonElement = formElement.querySelector(settings.submitButtonSelector);
+  
+  inputList.forEach((inputElement) => {
+    hideInputError(formElement, inputElement, settings);
+  });
+  
+  disableSubmitButton(buttonElement, settings);
+};
+
