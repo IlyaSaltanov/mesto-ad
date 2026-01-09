@@ -110,3 +110,6 @@ const enableValidation = (settings) => {
     setEventListeners(formElement, settings);
   });
 };
+
+// Экспортируем функции и переменную validationSettings
+export { enableValidation, clearValidation, validationSettings };
