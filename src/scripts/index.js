@@ -9,6 +9,7 @@
 import { initialCards } from "./cards.js";
 import { createCardElement, deleteCard, likeCard } from "./components/card.js";
 import { openModalWindow, closeModalWindow, setCloseModalWindowEventListeners } from "./components/modal.js";
+import { enableValidation, clearValidation, validationSettings } from "./components/validation.js";
 
 // DOM узлы
 const placesWrap = document.querySelector(".places__list");
@@ -113,3 +114,4 @@ const allPopups = document.querySelectorAll(".popup");
 allPopups.forEach((popup) => {
   setCloseModalWindowEventListeners(popup);
 });
+
