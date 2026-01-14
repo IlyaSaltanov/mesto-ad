@@ -11,6 +11,13 @@ import { createCardElement, deleteCard, likeCard } from "./components/card.js";
 import { openModalWindow, closeModalWindow, setCloseModalWindowEventListeners } from "./components/modal.js";
 import { enableValidation, clearValidation, validationSettings } from "./components/validation.js";
 
+import {
+  getUserInfo,
+  getCardList,
+  setUserInfo,
+  deleteCard
+} from "./components/api.js";
+
 // DOM узлы
 const placesWrap = document.querySelector(".places__list");
 const profileFormModalWindow = document.querySelector(".popup_type_edit");
