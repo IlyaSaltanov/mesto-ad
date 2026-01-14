@@ -71,8 +71,25 @@ const handleProfileFormSubmit = (evt) => {
 
 const handleAvatarFromSubmit = (evt) => {
   evt.preventDefault();
-  profileAvatar.style.backgroundImage = `url(${avatarInput.value})`;
-  closeModalWindow(avatarFormModalWindow);
+  
+  // Получаем ссылку на аватар из input
+  const newAvatarUrl = avatarInput.value;
+  
+  // Вызываем функцию updateAvatar из api.js
+  updateAvatar(newAvatarUrl)
+    .then((userData) => {
+      // После успешного ответа от сервера обновляем аватар на странице
+      profileAvatar.style.backgroundImage = `url('${userData.avatar}')`;
+      
+      // Закрываем модальное окно
+      closeModalWindow(avatarFormModalWindow);
+      
+      // Очищаем форму
+      avatarForm.reset();
+    })
+    .catch((err) => {
+      console.log("Ошибка при обновлении аватара:", err);
+    });
 };
 
 const handleCardFormSubmit = (evt) => {
