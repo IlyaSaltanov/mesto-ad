@@ -120,3 +120,36 @@ allPopups.forEach((popup) => {
 
 // Включение валидации всех форм
 enableValidation(validationSettings);
+
+Promise.all([getCardList(), getUserInfo()])
+  .then(([cards, userData]) => {
+    currentUserId = userData._id;
+
+    // Заполняем профиль данными с сервера
+    profileTitle.textContent = userData.name;
+    profileDescription.textContent = userData.about;
+    profileAvatar.style.backgroundImage = `url('${userData.avatar}')`;
+
+    // Отображаем карточки с сервера
+    cards.forEach((cardData) => {
+      const isOwn = cardData.owner._id === currentUserId;
+      const isLiked = cardData.likes.some((like) => like._id === currentUserId);
+
+      const cardElement = createCardElement(
+        cardData,
+        {
+          onPreviewPicture: handlePreviewPicture,
+          onLikeIcon: (cardId) => handleLikeCard(cardId, cardElement),
+          onDeleteCard: (cardId) => handleDeleteCard(cardId, cardElement),
+        },
+        isOwn,
+        isLiked,
+        cardData.likes.length
+      );
+
+      placesWrap.append(cardElement);
+    });
+  })
+  .catch((err) => {
+    console.log(err); // В случае возникновения ошибки выводим её в консоль
+  });
