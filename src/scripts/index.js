@@ -15,7 +15,9 @@ import {
   getUserInfo,
   getCardList,
   setUserInfo,
-  deleteCard
+  deleteCard,
+  updateAvatar,
+  addCard
 } from "./components/api.js";
 
 // DOM узлы
@@ -44,6 +46,8 @@ const profileAvatar = document.querySelector(".profile__image");
 const avatarFormModalWindow = document.querySelector(".popup_type_edit-avatar");
 const avatarForm = avatarFormModalWindow.querySelector(".popup__form");
 const avatarInput = avatarForm.querySelector(".popup__input");
+
+let currentUserId = null;
 
 const handlePreviewPicture = ({ name, link }) => {
   imageElement.src = link;
@@ -94,21 +98,47 @@ const handleAvatarFromSubmit = (evt) => {
 
 const handleCardFormSubmit = (evt) => {
   evt.preventDefault();
-  placesWrap.prepend(
-    createCardElement(
-      {
-        name: cardNameInput.value,
-        link: cardLinkInput.value,
-      },
-      {
-        onPreviewPicture: handlePreviewPicture,
-        onLikeIcon: likeCard,
-        onDeleteCard: deleteCard,
-      }
-    )
-  );
-
-  closeModalWindow(cardFormModalWindow);
+  
+  // 1. Получаем данные из формы
+  const cardName = cardNameInput.value;
+  const cardLink = cardLinkInput.value;
+  
+  // 2. Вызываем функцию addCard из api.js для отправки на сервер
+  addCard({
+    name: cardName,
+    link: cardLink,
+  })
+    .then((newCardData) => {
+      // 3. После успешного ответа от сервера добавляем карточку на страницу
+      
+      // 4. Определяем, является ли текущий пользователь владельцем карточки
+      const isOwn = newCardData.owner._id === currentUserId;
+      
+      // 5. Создаем элемент карточки с данными из ответа сервера
+      const cardElement = createCardElement(
+        newCardData,
+        {
+          onPreviewPicture: handlePreviewPicture,
+          onLikeIcon: likeCard,
+          onDeleteCard: deleteCard,
+        },
+        isOwn,
+        false,  // новая карточка еще не лайкнута
+        0       // количество лайков = 0
+      );
+      
+      // 6. Добавляем карточку в начало списка
+      placesWrap.prepend(cardElement);
+      
+      // 7. Закрываем модальное окно
+      closeModalWindow(cardFormModalWindow);
+      
+      // 8. Очищаем форму
+      cardForm.reset();
+    })
+    .catch((err) => {
+      console.log("Ошибка при добавлении карточки:", err);
+    });
 };
 
 // EventListeners
