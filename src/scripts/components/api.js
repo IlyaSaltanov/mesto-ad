@@ -136,3 +136,16 @@ export const addCard = ({ name, link }) => {
 //     },
 //     "createdAt": "{{ Дата и время создания карточки }}"
 //   },
+
+// Удаление карточки
+export const deleteCard = (cardId) => {
+  return fetch(`${config.baseUrl}/cards/${cardId}`, {
+    method: "DELETE",
+    headers: config.headers,
+  }).then(getResponseData);
+};
+
+// При выполнении такого запроса, если он прошёл успешно, сервер вернёт ответ:
+// {
+//   "message": "Пост удалён"
+// }
