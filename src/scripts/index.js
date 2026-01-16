@@ -17,7 +17,8 @@ import {
   setUserInfo,
   deleteCard,
   updateAvatar,
-  addCard
+  addCard,
+  deleteCard as deleteCardApi
 } from "./components/api.js";
 
 // DOM узлы
@@ -211,9 +212,15 @@ Promise.all([getCardList(), getUserInfo()])
         cardData.likes.length
       );
 
+      // Скрываем иконку удаления, если пользователь не автор
+      const deleteButton = cardElement.querySelector('.card__control-button_type_delete');
+      if (deleteButton && !isOwn) {
+        deleteButton.style.display = 'none';
+      }
+
       placesWrap.append(cardElement);
     });
   })
   .catch((err) => {
-    console.log(err); // В случае возникновения ошибки выводим её в консоль
+    console.log(err);
   });
