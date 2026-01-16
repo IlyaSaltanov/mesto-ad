@@ -186,6 +186,17 @@ allPopups.forEach((popup) => {
 // Включение валидации всех форм
 enableValidation(validationSettings);
 
+const handleDeleteCard = (cardId, cardElement) => {
+  deleteCardApi(cardId)
+    .then(() => {
+      cardElement.remove();
+    })
+    .catch((err) => {
+      console.log("Ошибка при удалении карточки:", err);
+    });
+};
+
+
 Promise.all([getCardList(), getUserInfo()])
   .then(([cards, userData]) => {
     currentUserId = userData._id;
