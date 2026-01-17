@@ -6,10 +6,10 @@
   Из index.js не допускается что то экспортировать
 */
 
-import { createCardElement, deleteCard, likeCard } from "./components/card.js";
+import { createCardElement, likeCard } from "./components/card.js";
 import { openModalWindow, closeModalWindow, setCloseModalWindowEventListeners } from "./components/modal.js";
 import { enableValidation, clearValidation, validationSettings } from "./components/validation.js";
-import { getUserInfo, getCardList, setUserInfo, setAvatarInfo, addCard } from "./components/api.js";
+import { getUserInfo, getCardList, setUserInfo, setAvatarInfo, addCard, deleteCard } from "./components/api.js";
 
 // Тест API функций
 console.log("🧪 Тестирование API...");
@@ -52,11 +52,23 @@ const avatarFormModalWindow = document.querySelector(".popup_type_edit-avatar");
 const avatarForm = avatarFormModalWindow.querySelector(".popup__form");
 const avatarInput = avatarForm.querySelector(".popup__input");
 
+let userId;
+
 const handlePreviewPicture = ({ name, link }) => {
   imageElement.src = link;
   imageElement.alt = name;
   imageCaption.textContent = name;
   openModalWindow(imageModalWindow);
+};
+
+const handleDeleteCard = (cardId, cardElement) => {
+  deleteCard(cardId)
+    .then(() => {
+      cardElement.remove();
+    })
+    .catch((err) => {
+      console.log(err);
+    });
 };
 
 const handleProfileFormSubmit = (evt) => {
@@ -102,7 +114,8 @@ const handleCardFormSubmit = (evt) => {
         createCardElement(cardData, {
           onPreviewPicture: handlePreviewPicture,
           onLikeIcon: likeCard,
-          onDeleteCard: deleteCard,
+          onDeleteCard: handleDeleteCard,
+          userId,
         })
       );
       closeModalWindow(cardFormModalWindow);
@@ -146,18 +159,19 @@ enableValidation(validationSettings);
 
 Promise.all([getCardList(), getUserInfo()])
   .then(([cards, userData]) => {
+    userId = userData._id;
 
     profileTitle.textContent = userData.name;
     profileDescription.textContent = userData.about;
     profileAvatar.style.backgroundImage = `url(${userData.avatar})`;
-
 
     cards.forEach((data) => {
       placesWrap.append(
         createCardElement(data, {
           onPreviewPicture: handlePreviewPicture,
           onLikeIcon: likeCard,
-          onDeleteCard: deleteCard,
+          onDeleteCard: handleDeleteCard,
+          userId,
         })
       );
     });
