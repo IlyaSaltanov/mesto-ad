@@ -42,7 +42,7 @@ export const createCardElement = (
   }
 
   if (onDeleteCard) {
-    deleteButton.addEventListener("click", () => onDeleteCard(data._id, cardElement));
+    deleteButton.addEventListener("click", () => onDeleteCard(data._id, cardElement, deleteButton));
   }
 
   if (onPreviewPicture) {

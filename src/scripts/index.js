@@ -61,13 +61,17 @@ const handlePreviewPicture = ({ name, link }) => {
   openModalWindow(imageModalWindow);
 };
 
-const handleDeleteCard = (cardId, cardElement) => {
+const handleDeleteCard = (cardId, cardElement, deleteButton) => {
+  const buttonText = deleteButton.textContent;
+  deleteButton.textContent = "Удаление...";
+  
   deleteCard(cardId)
     .then(() => {
       cardElement.remove();
     })
     .catch((err) => {
       console.log(err);
+      deleteButton.textContent = buttonText;
     });
 };
 
@@ -85,6 +89,10 @@ const handleLikeCard = (cardId, likeButton, isLiked) => {
 
 const handleProfileFormSubmit = (evt) => {
   evt.preventDefault();
+  const submitButton = profileForm.querySelector("button[type='submit']");
+  const buttonText = submitButton.textContent;
+  submitButton.textContent = "Сохранение...";
+  
   setUserInfo({
     name: profileTitleInput.value,
     about: profileDescriptionInput.value,
@@ -96,11 +104,18 @@ const handleProfileFormSubmit = (evt) => {
     })
     .catch((err) => {
       console.log(err);
+    })
+    .finally(() => {
+      submitButton.textContent = buttonText;
     });
 };
 
 const handleAvatarFromSubmit = (evt) => {
   evt.preventDefault();
+  const submitButton = avatarForm.querySelector("button[type='submit']");
+  const buttonText = submitButton.textContent;
+  submitButton.textContent = "Сохранение...";
+  
   setAvatarInfo({
     name: profileTitle.textContent,
     about: profileDescription.textContent,
@@ -112,11 +127,18 @@ const handleAvatarFromSubmit = (evt) => {
     })
     .catch((err) => {
       console.log(err);
+    })
+    .finally(() => {
+      submitButton.textContent = buttonText;
     });
 };
 
 const handleCardFormSubmit = (evt) => {
   evt.preventDefault();
+  const submitButton = cardForm.querySelector("button[type='submit']");
+  const buttonText = submitButton.textContent;
+  submitButton.textContent = "Создание...";
+  
   addCard({
     name: cardNameInput.value,
     link: cardLinkInput.value,
@@ -134,6 +156,9 @@ const handleCardFormSubmit = (evt) => {
     })
     .catch((err) => {
       console.log(err);
+    })
+    .finally(() => {
+      submitButton.textContent = buttonText;
     });
 };
 
