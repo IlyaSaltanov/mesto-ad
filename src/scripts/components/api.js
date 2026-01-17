@@ -32,19 +32,7 @@ export const getCardList = () => {
     headers: config.headers,
   }).then(getResponseData);
 };
-
-export const setUserInfo = ({ name, about }) => {
-  return fetch(`${config.baseUrl}/users/me`, {
-    method: "PATCH",
-    headers: config.headers,
-    body: JSON.stringify({
-      name,
-      about,
-    }),
-  }).then(getResponseData);
-};
-
-// При выполнении такого запроса, если он прошёл успешно, 
+// При выполнении такого запроса (getCardList), если он прошёл успешно, 
 // в ответе от сервера вы получите JSON с массивом карточек, 
 // которые загрузили студенты вашей группы:
 // [
@@ -71,3 +59,14 @@ export const setUserInfo = ({ name, about }) => {
 //     "createdAt": "{{ Дата и время создания карточки }}"
 //   },
 // ]
+
+export const setUserInfo = ({ name, about }) => {
+  return fetch(`${config.baseUrl}/users/me`, {
+    method: "PATCH",
+    headers: config.headers,
+    body: JSON.stringify({
+      name,
+      about,
+    }),
+  }).then(getResponseData);
+};

@@ -21,6 +21,10 @@ getCardList()
   .then(cards => console.log("✓ getCardList успешна:", cards))
   .catch(error => console.error("✗ Ошибка getCardList:", error));
 
+setUserInfo({ name: "Test Name", about: "Test About" })
+  .then(userData => console.log("✓ setUserInfo успешна:", userData))
+  .catch(error => console.error("✗ Ошибка setUserInfo:", error));
+
 // DOM узлы
 const placesWrap = document.querySelector(".places__list");
 const profileFormModalWindow = document.querySelector(".popup_type_edit");
