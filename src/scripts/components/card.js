@@ -21,10 +21,12 @@ export const createCardElement = (
   const likeButton = cardElement.querySelector(".card__like-button");
   const deleteButton = cardElement.querySelector(".card__control-button_type_delete");
   const cardImage = cardElement.querySelector(".card__image");
+  const likeCount = cardElement.querySelector(".card__like-count");
 
   cardImage.src = data.link;
   cardImage.alt = data.name;
   cardElement.querySelector(".card__title").textContent = data.name;
+  likeCount.textContent = data.likes.length;
 
   if (data.owner._id !== userId) {
     deleteButton.remove();

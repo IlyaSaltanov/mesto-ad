@@ -73,8 +73,10 @@ const handleDeleteCard = (cardId, cardElement) => {
 
 const handleLikeCard = (cardId, likeButton, isLiked) => {
   changeLikeCardStatus(cardId, isLiked)
-    .then(() => {
+    .then((cardData) => {
       likeButton.classList.toggle("card__like-button_is-active");
+      const likeCount = likeButton.closest(".card").querySelector(".card__like-count");
+      likeCount.textContent = cardData.likes.length;
     })
     .catch((err) => {
       console.log(err);
