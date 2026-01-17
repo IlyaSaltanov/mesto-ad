@@ -9,7 +9,7 @@
 import { createCardElement, deleteCard, likeCard } from "./components/card.js";
 import { openModalWindow, closeModalWindow, setCloseModalWindowEventListeners } from "./components/modal.js";
 import { enableValidation, clearValidation, validationSettings } from "./components/validation.js";
-import { getUserInfo, getCardList, setUserInfo } from "./components/api.js";
+import { getUserInfo, getCardList, setUserInfo, setAvatarInfo } from "./components/api.js";
 
 // Тест API функций
 console.log("🧪 Тестирование API...");
@@ -77,8 +77,18 @@ const handleProfileFormSubmit = (evt) => {
 
 const handleAvatarFromSubmit = (evt) => {
   evt.preventDefault();
-  profileAvatar.style.backgroundImage = `url(${avatarInput.value})`;
-  closeModalWindow(avatarFormModalWindow);
+  setAvatarInfo({
+    name: profileTitle.textContent,
+    about: profileDescription.textContent,
+    avatar: avatarInput.value,
+  })
+    .then((userData) => {
+      profileAvatar.style.backgroundImage = `url('${userData.avatar}')`;
+      closeModalWindow(avatarFormModalWindow);
+    })
+    .catch((err) => {
+      console.log(err);
+    });
 };
 
 const handleCardFormSubmit = (evt) => {
@@ -124,16 +134,14 @@ openCardFormButton.addEventListener("click", () => {
   openModalWindow(cardFormModalWindow);
 });
 
-//настраиваем обработчики закрытия попапов
 const allPopups = document.querySelectorAll(".popup");
 allPopups.forEach((popup) => {
   setCloseModalWindowEventListeners(popup);
 });
 
-// Включение валидации всех форм
 enableValidation(validationSettings);
 
-// Загрузка данных с сервера
+
 Promise.all([getCardList(), getUserInfo()])
   .then(([cards, userData]) => {
 
