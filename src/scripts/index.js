@@ -41,6 +41,12 @@ const imageModalWindow = document.querySelector(".popup_type_image");
 const imageElement = imageModalWindow.querySelector(".popup__image");
 const imageCaption = imageModalWindow.querySelector(".popup__caption");
 
+const cardInfoModalWindow = document.querySelector(".popup_type_info");
+const cardInfoModalTitle = cardInfoModalWindow.querySelector(".popup__title");
+const cardInfoModalInfoList = cardInfoModalWindow.querySelector(".popup__info");
+const cardInfoModalUserListTitle = cardInfoModalWindow.querySelector(".popup__text");
+const cardInfoModalUserList = cardInfoModalWindow.querySelector(".popup__list");
+
 const openProfileFormButton = document.querySelector(".profile__edit-button");
 const openCardFormButton = document.querySelector(".profile__add-button");
 
@@ -53,6 +59,77 @@ const avatarForm = avatarFormModalWindow.querySelector(".popup__form");
 const avatarInput = avatarForm.querySelector(".popup__input");
 
 let userId;
+
+const formatDate = (date) =>
+  date.toLocaleDateString("ru-RU", {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  });
+
+const createInfoString = (term, description) => {
+  const infoTemplate = document.getElementById("popup-info-definition-template");
+  const infoElement = infoTemplate.content.cloneNode(true);
+  infoElement.querySelector(".popup__info-term").textContent = term;
+  infoElement.querySelector(".popup__info-description").textContent = description;
+  return infoElement;
+};
+
+const createUserPreviewElement = (userName) => {
+  const userTemplate = document.getElementById("popup-info-user-preview-template");
+  const userElement = userTemplate.content.cloneNode(true);
+  userElement.querySelector(".popup__list-item").textContent = userName;
+  return userElement;
+};
+
+const handleInfoClick = (cardId) => {
+  getCardList()
+    .then((cards) => {
+      const cardData = cards.find(card => card._id === cardId);
+      
+      cardInfoModalTitle.textContent = cardData.name;
+      cardInfoModalInfoList.innerHTML = "";
+      cardInfoModalUserList.innerHTML = "";
+      
+      cardInfoModalInfoList.append(
+        createInfoString(
+          "Описание:",
+          cardData.name
+        )
+      );
+
+      cardInfoModalInfoList.append(
+        createInfoString(
+          "Дата создания:",
+          formatDate(new Date(cardData.createdAt))
+        )
+      );
+
+      cardInfoModalInfoList.append(
+        createInfoString(
+          "Автор:",
+          cardData.owner.name
+        )
+      );
+
+      cardInfoModalUserListTitle.textContent = "Лайкнули:";
+      
+      if (cardData.likes.length > 0) {
+        cardData.likes.forEach((like) => {
+          cardInfoModalUserList.append(
+            createUserPreviewElement(like.name)
+          );
+        });
+      } else {
+        cardInfoModalUserListTitle.textContent = "Лайков нет";
+      }
+
+      openModalWindow(cardInfoModalWindow);
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+};
 
 const handlePreviewPicture = ({ name, link }) => {
   imageElement.src = link;
@@ -149,6 +226,7 @@ const handleCardFormSubmit = (evt) => {
           onPreviewPicture: handlePreviewPicture,
           onLikeIcon: handleLikeCard,
           onDeleteCard: handleDeleteCard,
+          onInfoClick: handleInfoClick,
           userId,
         })
       );
@@ -208,6 +286,7 @@ Promise.all([getCardList(), getUserInfo()])
           onPreviewPicture: handlePreviewPicture,
           onLikeIcon: handleLikeCard,
           onDeleteCard: handleDeleteCard,
+          onInfoClick: handleInfoClick,
           userId,
         })
       );
