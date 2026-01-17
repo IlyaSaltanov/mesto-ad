@@ -30,8 +30,13 @@ export const createCardElement = (
     deleteButton.remove();
   }
 
+  const isLiked = data.likes.some(like => like._id === userId);
+  if (isLiked) {
+    likeButton.classList.add("card__like-button_is-active");
+  }
+
   if (onLikeIcon) {
-    likeButton.addEventListener("click", () => onLikeIcon(likeButton));
+    likeButton.addEventListener("click", () => onLikeIcon(data._id, likeButton, isLiked));
   }
 
   if (onDeleteCard) {

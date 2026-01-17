@@ -9,7 +9,7 @@
 import { createCardElement, likeCard } from "./components/card.js";
 import { openModalWindow, closeModalWindow, setCloseModalWindowEventListeners } from "./components/modal.js";
 import { enableValidation, clearValidation, validationSettings } from "./components/validation.js";
-import { getUserInfo, getCardList, setUserInfo, setAvatarInfo, addCard, deleteCard } from "./components/api.js";
+import { getUserInfo, getCardList, setUserInfo, setAvatarInfo, addCard, deleteCard, changeLikeCardStatus } from "./components/api.js";
 
 // Тест API функций
 console.log("🧪 Тестирование API...");
@@ -71,6 +71,16 @@ const handleDeleteCard = (cardId, cardElement) => {
     });
 };
 
+const handleLikeCard = (cardId, likeButton, isLiked) => {
+  changeLikeCardStatus(cardId, isLiked)
+    .then(() => {
+      likeButton.classList.toggle("card__like-button_is-active");
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+};
+
 const handleProfileFormSubmit = (evt) => {
   evt.preventDefault();
   setUserInfo({
@@ -113,7 +123,7 @@ const handleCardFormSubmit = (evt) => {
       placesWrap.prepend(
         createCardElement(cardData, {
           onPreviewPicture: handlePreviewPicture,
-          onLikeIcon: likeCard,
+          onLikeIcon: handleLikeCard,
           onDeleteCard: handleDeleteCard,
           userId,
         })
@@ -169,7 +179,7 @@ Promise.all([getCardList(), getUserInfo()])
       placesWrap.append(
         createCardElement(data, {
           onPreviewPicture: handlePreviewPicture,
-          onLikeIcon: likeCard,
+          onLikeIcon: handleLikeCard,
           onDeleteCard: handleDeleteCard,
           userId,
         })

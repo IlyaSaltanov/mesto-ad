@@ -122,3 +122,10 @@ export const deleteCard = (cardId) => {
     headers: config.headers,
   }).then(getResponseData);
 };
+
+export const changeLikeCardStatus = (cardId, isLiked) => {
+  return fetch(`${config.baseUrl}/cards/likes/${cardId}`, {
+    method: isLiked ? "DELETE" : "PUT",
+    headers: config.headers,
+  }).then((res) => getResponseData(res));
+};
