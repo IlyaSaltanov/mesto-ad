@@ -9,7 +9,7 @@
 import { createCardElement, deleteCard, likeCard } from "./components/card.js";
 import { openModalWindow, closeModalWindow, setCloseModalWindowEventListeners } from "./components/modal.js";
 import { enableValidation, clearValidation, validationSettings } from "./components/validation.js";
-import { getUserInfo, getCardList } from "./components/api.js";
+import { getUserInfo, getCardList, setUserInfo } from "./components/api.js";
 
 // Тест API функций
 console.log("🧪 Тестирование API...");
@@ -57,9 +57,18 @@ const handlePreviewPicture = ({ name, link }) => {
 
 const handleProfileFormSubmit = (evt) => {
   evt.preventDefault();
-  profileTitle.textContent = profileTitleInput.value;
-  profileDescription.textContent = profileDescriptionInput.value;
-  closeModalWindow(profileFormModalWindow);
+  setUserInfo({
+    name: profileTitleInput.value,
+    about: profileDescriptionInput.value,
+  })
+    .then((userData) => {
+      profileTitle.textContent = userData.name;
+      profileDescription.textContent = userData.about;
+      closeModalWindow(profileFormModalWindow);
+    })
+    .catch((err) => {
+      console.log(err);
+    });
 };
 
 const handleAvatarFromSubmit = (evt) => {
@@ -123,12 +132,12 @@ enableValidation(validationSettings);
 // Загрузка данных с сервера
 Promise.all([getCardList(), getUserInfo()])
   .then(([cards, userData]) => {
-    // Отрисовка данных пользователя
+
     profileTitle.textContent = userData.name;
     profileDescription.textContent = userData.about;
     profileAvatar.style.backgroundImage = `url(${userData.avatar})`;
 
-    // Отрисовка карточек
+
     cards.forEach((data) => {
       placesWrap.append(
         createCardElement(data, {
@@ -140,5 +149,5 @@ Promise.all([getCardList(), getUserInfo()])
     });
   })
   .catch((err) => {
-    console.log(err); // В случае возникновения ошибки выводим её в консоль
+    console.log(err);
   });
