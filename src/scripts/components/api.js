@@ -104,3 +104,14 @@ export const setAvatarInfo = ({ name, about, avatar }) => {
 //   "_id": "{{ Ваш идентификатор пользователя }}",
 //   "cohort": "{{ Ваш идентификатор группы }}"
 // }
+
+export const addCard = ({ name, link }) => {
+  return fetch(`${config.baseUrl}/cards`, {
+    method: "POST",
+    headers: config.headers,
+    body: JSON.stringify({
+      name,
+      link,
+    }),
+  }).then(getResponseData);
+};
