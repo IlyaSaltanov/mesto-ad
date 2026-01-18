@@ -139,16 +139,12 @@ const handlePreviewPicture = ({ name, link }) => {
 };
 
 const handleDeleteCard = (cardId, cardElement, deleteButton) => {
-  const buttonText = deleteButton.textContent;
-  deleteButton.textContent = "Удаление...";
-  
   deleteCard(cardId)
     .then(() => {
       cardElement.remove();
     })
     .catch((err) => {
       console.log(err);
-      deleteButton.textContent = buttonText;
     });
 };
 

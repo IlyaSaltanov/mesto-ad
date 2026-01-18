@@ -116,6 +116,25 @@ export const addCard = ({ name, link }) => {
   }).then(getResponseData);
 };
 
+// При выполнении такого запроса (addCard), 
+// если он прошёл успешно, в ответе 
+// от сервера вы получите тело с объектом 
+// новой карточки:
+//   {
+//     "likes": [],
+//     "_id": "{{ Идентификатор новой карточки }}",
+//     "name": "{{ Имя новой карточки }}",
+//     "link": "{{ Ссылка на изображение новой карточки }}",
+//     "owner": {
+//       "name": "{{ Имя автора карточки }}",
+//       "about": "{{ Описание автора карточки }}",
+//       "avatar": "{{ Аватар автора карточки }}",
+//       "_id": "{{ Идентификатор автора карточки }}",
+//       "cohort": "{{ Идентификатор группы автора карточки}}"
+//     },
+//     "createdAt": "{{ Дата и время создания карточки }}"
+//   }, 
+
 export const deleteCard = (cardId) => {
   return fetch(`${config.baseUrl}/cards/${cardId}`, {
     method: "DELETE",
@@ -123,9 +142,59 @@ export const deleteCard = (cardId) => {
   }).then(getResponseData);
 };
 
+// При выполнении такого запроса, 
+// если он прошёл успешно, сервер вернёт ответ:
+// {
+//   "message": "Пост удалён"
+// }
+
 export const changeLikeCardStatus = (cardId, isLiked) => {
   return fetch(`${config.baseUrl}/cards/likes/${cardId}`, {
     method: isLiked ? "DELETE" : "PUT",
     headers: config.headers,
   }).then((res) => getResponseData(res));
 };
+// Ответ от сервера при выполнении запроса changeLikeCardStatus
+// {
+//     "likes": [
+//         {
+//             "name": "Vladislav",
+//             "about": "daddad",
+//             "avatar": "https://img.geliophoto.com/surgut2020/01_surgut2020.jpg",
+//             "_id": "7702abb3ead4f0dc74d4715e",
+//             "cohort": "apf-cohort-202"
+//         },
+//         {
+//             "name": "МишаМаша",
+//             "about": "ктото",
+//             "avatar": "https://sun59-2.userapi.com/s/v1/ig2/Ny0MzBmid--im076Y3FDuvSShQ4HhMmp4qgB8LZ1IA1LIaW73utN15T2sWhqVXGpnKZHPGsAlSw7Q2boZuMThlQB.jpg?quality=95&as=32x31,48x46,72x69,108x104,160x154,240x231,360x346,480x462,540x520,640x616,720x693,952x916&from=bu&cs=952x0",
+//             "_id": "ab89961cdb52d9543ebf0e19",
+//             "cohort": "apf-cohort-202"
+//         },
+//         {
+//             "name": "ввава",
+//             "about": "Исследователь океана",
+//             "avatar": "https://pictures.s3.yandex.net/frontend-developer/common/ava.jpg",
+//             "_id": "bc16ef937c37f7f766687e9c",
+//             "cohort": "apf-cohort-202"
+//         },
+//         {
+//             "name": "Dmitriy",
+//             "about": "programmer",
+//             "avatar": "https://i.pinimg.com/736x/86/91/d5/8691d5bbd2af2aa09d4130bc52fa6d79.jpg",
+//             "_id": "2ac3969df4d02c02f05f68e8",
+//             "cohort": "apf-cohort-202"
+//         }
+//     ],
+//     "_id": "696d2f5a80608c1c5b06074a",
+//     "name": "вцввфцвф",
+//     "link": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTX8_hQCsPvmqVorb3nozSyV3bbxCVEVuxDwg&s",
+//     "owner": {
+//         "name": "Vladislav",
+//         "about": "daddad",
+//         "avatar": "https://img.geliophoto.com/surgut2020/01_surgut2020.jpg",
+//         "_id": "7702abb3ead4f0dc74d4715e",
+//         "cohort": "apf-cohort-202"
+//     },
+//     "createdAt": "2026-01-18T19:07:06.301Z"
+// }
