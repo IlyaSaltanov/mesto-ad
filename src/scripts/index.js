@@ -12,18 +12,18 @@ import { enableValidation, clearValidation, validationSettings } from "./compone
 import { getUserInfo, getCardList, setUserInfo, setAvatarInfo, addCard, deleteCard, changeLikeCardStatus } from "./components/api.js";
 
 // Тест API функций
-console.log("🧪 Тестирование API...");
-getUserInfo()
-  .then(user => console.log("✓ getUserInfo успешна:", user))
-  .catch(error => console.error("✗ Ошибка getUserInfo:", error));
+// console.log("🧪 Тестирование API...");
+// getUserInfo()
+//   .then(user => console.log("✓ getUserInfo успешна:", user))
+//   .catch(error => console.error("✗ Ошибка getUserInfo:", error));
 
-getCardList()
-  .then(cards => console.log("✓ getCardList успешна:", cards))
-  .catch(error => console.error("✗ Ошибка getCardList:", error));
+// getCardList()
+//   .then(cards => console.log("✓ getCardList успешна:", cards))
+//   .catch(error => console.error("✗ Ошибка getCardList:", error));
 
-setUserInfo({ name: "Test Name", about: "Test About" })
-  .then(userData => console.log("✓ setUserInfo успешна:", userData))
-  .catch(error => console.error("✗ Ошибка setUserInfo:", error));
+// setUserInfo({ name: "Test Name", about: "Test About" })
+//   .then(userData => console.log("✓ setUserInfo успешна:", userData))
+//   .catch(error => console.error("✗ Ошибка setUserInfo:", error));
 
 // DOM узлы
 const placesWrap = document.querySelector(".places__list");
