@@ -83,7 +83,7 @@ export const setUserInfo = ({ name, about }) => {
 // }
 
 export const setAvatarInfo = ({ name, about, avatar }) => {
-  return fetch(`${config.baseUrl}/users/me`, {
+  return fetch(`${config.baseUrl}/users/me/avatar`, {
     method: "PATCH",
     headers: config.headers,
     body: JSON.stringify({
