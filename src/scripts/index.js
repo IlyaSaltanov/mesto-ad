@@ -101,7 +101,7 @@ openCardFormButton.addEventListener("click", () => {
   openModalWindow(cardFormModalWindow);
 });
 
-// отображение карточек
+
 initialCards.forEach((data) => {
   placesWrap.append(
     createCardElement(data, {
@@ -112,11 +112,11 @@ initialCards.forEach((data) => {
   );
 });
 
-//настраиваем обработчики закрытия попапов
+
 const allPopups = document.querySelectorAll(".popup");
 allPopups.forEach((popup) => {
   setCloseModalWindowEventListeners(popup);
 });
 
-// Включение валидации всех форм
+
 enableValidation(validationSettings);
