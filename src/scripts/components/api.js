@@ -82,13 +82,14 @@ export const setUserInfo = ({ name, about }) => {
 //   "cohort": "{{ Ваш идентификатор группы }}"
 // }
 
-export const setAvatarInfo = ({ name, about, avatar }) => {
+// export const setAvatarInfo = ({ name, about, avatar }) => {
+export const setAvatarInfo = ({ avatar }) => {
   return fetch(`${config.baseUrl}/users/me/avatar`, {
     method: "PATCH",
     headers: config.headers,
     body: JSON.stringify({
-      name,
-      about,
+      // name,
+      // about,
       avatar,
     }),
   }).then(getResponseData);

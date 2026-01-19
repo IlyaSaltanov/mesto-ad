@@ -190,8 +190,8 @@ const handleAvatarFromSubmit = (evt) => {
   submitButton.textContent = "Сохранение...";
   
   setAvatarInfo({
-    name: profileTitle.textContent,
-    about: profileDescription.textContent,
+    // name: profileTitle.textContent,
+    // about: profileDescription.textContent,
     avatar: avatarInput.value,
   })
     .then((userData) => {
